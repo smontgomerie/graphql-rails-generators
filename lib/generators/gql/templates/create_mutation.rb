@@ -8,9 +8,7 @@ module Mutations
         @fields.reject! { |field| [:id, :created_at, :updated_at].include?(field[:name]) }
       end
       @fields.each do |field|
-      %>
-      <%= sprintf("field :%s, %s, null: %s", "  ", field[:name], field[:gql_type], field[:null]) %>
-      <% end %>
+      %> <%= sprintf("field :%s, %s, null: %s", field[:name], field[:gql_type], field[:null]) %> <% end %>
     end
 
     field :<%= singular_name %>, Types::<%= name %>Type, null: true
