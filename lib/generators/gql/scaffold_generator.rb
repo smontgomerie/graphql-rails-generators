@@ -2,7 +2,7 @@ require "rails/generators/named_base"
 require_relative 'gql_generator_base'
 
 module Gql
-  class MutationsGenerator < Rails::Generators::NamedBase
+  class ScaffoldGenerator < Rails::Generators::NamedBase
     include GqlGeneratorBase
     source_root File.expand_path('../templates', __FILE__)
     desc "Generate create, update and delete generators for a model."
@@ -12,7 +12,7 @@ module Gql
     class_option :superclass, type: :string, default: 'Types::BaseInputObject'
     class_option :namespace, type: :string, default: 'Types::Input'
 
-    def scaffolds
+    def scaffold
       generate_queries
       generate_mutation('update')
       generate_mutation('create')
