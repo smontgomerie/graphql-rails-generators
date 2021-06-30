@@ -7,7 +7,7 @@ module Mutations
     def resolve(id:)
       model = <%= class_name %>.find_by(uuid: id)
 
-      authorize! <%= model %>, to: :destroy?
+      authorize! <%= singular_name %>, to: :destroy?
 
       model.destroy
       {<%= singular_name %>: model}

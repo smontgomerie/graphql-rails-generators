@@ -15,7 +15,7 @@ module Mutations
     def resolve(input:, id:)
       <%= singular_name %> = <%= class_name %>.find_by(uuid: id)
 
-      authorize! <%= model %>, to: :update?
+      authorize! <%= singular_name %>, to: :update?
 
       if <%= singular_name %>.update_attributes(input.to_h)
         {<%= singular_name %>: <%= singular_name %>}
