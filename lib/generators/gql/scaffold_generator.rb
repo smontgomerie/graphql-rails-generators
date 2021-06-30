@@ -29,6 +29,10 @@ module Gql
       end
     end
 
+    def generate_policy
+      template("policy_file.rb", "app/policies/#{singular_name.pluralize}_policy.rb")
+    end
+
     def generate_queries
       template("show_query.rb", "app/graphql/resolvers/#{singular_name}.rb")
       insert_into_file("app/graphql/types/query_type.rb", after: " class QueryType < Types::BaseObject\n") do
@@ -39,8 +43,6 @@ module Gql
       insert_into_file("app/graphql/types/query_type.rb", after: " class QueryType < Types::BaseObject\n") do
           "    field :#{singular_name.pluralize.camelcase(:lower)}, resolver: Resolvers::#{singular_name.pluralize.capitalize}\n"
       end
-
-      template("policy_file.rb", "app/policies/#{singular_name.pluralize}_policy.rb")
     end
   end
 end
