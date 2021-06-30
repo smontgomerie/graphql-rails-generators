@@ -7,9 +7,9 @@ module Mutations
       if options['include_columns'].any?
         @fields.reject! { |field| [:id, :created_at, :updated_at].include?(field[:name]) }
       end
+      @fields.each do |field|
       %>
-      <% @fields.each do |field| %>
-        <%= sprintf("%sfield :%s, %s, null: %s", "  ", field[:name], field[:gql_type], field[:null]) %>
+      <%= sprintf("field :%s, %s, null: %s", "  ", field[:name], field[:gql_type], field[:null]) %>
       <% end %>
     end
 
