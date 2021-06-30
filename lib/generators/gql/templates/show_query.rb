@@ -3,7 +3,7 @@
 module Resolvers
   class <%= name %> < Resolvers::BaseResolver
     type Types::<%= name %>Type, null: false
-    description "Shows <%= name.downcase.pluralize %>"
+    description "Shows <%= name.downcase %>"
 
     argument :id, ID, required: true
 
