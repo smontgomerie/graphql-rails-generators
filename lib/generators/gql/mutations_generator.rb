@@ -7,6 +7,13 @@ module Gql
     source_root File.expand_path('../templates', __FILE__)
     desc "Generate create, update and delete generators for a model."
 
+    argument :model_name, type: :string
+
+    class_option :name, type: :string
+    class_option :include_columns, type: :array, default: []
+    class_option :superclass, type: :string, default: 'Types::BaseInputObject'
+    class_option :namespace, type: :string, default: 'Types::Input'
+
     def mutations
       insert_into_file("app/graphql/mutations/base_mutation.rb", before: "\tend\nend") do
         "def model_errors!(model)\n# define me!\n"
