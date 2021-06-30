@@ -4,9 +4,7 @@ module Mutations
       description 'Attributes to create <%= name %>'
       <%
       @fields = map_model_types(name)
-      if options['include_columns'].any?
-        @fields.reject! { |field| [:id, :created_at, :updated_at].include?(field[:name]) }
-      end
+      @fields.reject! { |field| ['id', 'created_at', 'updated_at'].include?(field[:name]) }
       @fields.each do |field|
       %>
       <%= sprintf("field :%s, %s, null: %s", field[:name], field[:gql_type], field[:null]) %> <% end %>
