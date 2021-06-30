@@ -33,6 +33,7 @@ module Gql
 
       insert_into_file("app/graphql/types/query_type.rb", after: " class QueryType < Types::BaseObject\n") do
         "    field :#{file_name.camelcase(:lower)}, mutation: Resolvers::#{prefixed_class_name(prefix)}\n"
+      end
     end
   end
 end
