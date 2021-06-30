@@ -3,13 +3,13 @@ module Mutations
     class Create<%= name %>Input < Types::BaseInputObject
       description 'Attributes to create <%= name %>'
       <%
-      fields = map_model_types(name)
+      @fields = map_model_types(name)
       if options['include_columns'].any?
-        fields.reject! { |field| !options['include_columns'].include?(field[:name]) }
+        @fields.reject! { |field| !options['include_columns'].include?(field[:name]) }
       end
       %>
 
-      <%= class_with_fields(options['namespace'], name, 'Types::BaseInputObject', 'Types::Input') %>
+      <%= class_with_fields(options['namespace'], name, 'Types::BaseInputObject', @fields) %>
 
       # argument :start_date, GraphQL::Types::ISO8601Date, required: true
     end
