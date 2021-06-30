@@ -7,8 +7,6 @@ module Gql
     source_root File.expand_path('../templates', __FILE__)
     desc "Generate create, update and delete generators for a model."
 
-    argument :model_name, type: :string
-
     class_option :name, type: :string
     class_option :include_columns, type: :array, default: []
     class_option :superclass, type: :string, default: 'Types::BaseInputObject'
