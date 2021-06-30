@@ -33,10 +33,12 @@ module Gql
       template("show_query.rb", "app/graphql/resolvers/#{singular_name}.rb")
       insert_into_file("app/graphql/types/query_type.rb", after: " class QueryType < Types::BaseObject\n") do
         "    field :#{singular_name.camelcase(:lower)}, resolver: Resolvers::#{singular_name.capitalize}\n"
+      end
 
       template("index_query.rb", "app/graphql/resolvers/#{singular_name.pluralize}.rb")
       insert_into_file("app/graphql/types/query_type.rb", after: " class QueryType < Types::BaseObject\n") do
           "    field :#{singular_name.pluralize.camelcase(:lower)}, resolver: Resolvers::#{singular_name.pluralize.capitalize}\n"
+      end
 
       template("policy_file.rb", "app/policies/#{singular_name.pluralize}_policy.rb")
     end
