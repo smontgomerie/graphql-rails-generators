@@ -14,12 +14,12 @@ module Mutations
     def resolve(input:)
       authorize! <%= name %>, to: :create?
 
-      model = <%= name %>.new(input.to_h)
+      <%= singular_name %> = <%= name %>.new(input.to_h)
 
-      if model.save
-        {<%= singular_name %>: model}
+      if <%= singular_name %>.save
+        {<%= singular_name %>: <%= singular_name %>}
       else
-        model_errors!(model)
+        { errors: validation_errors(<%= singular_name %>) }
       end
     end
   end
