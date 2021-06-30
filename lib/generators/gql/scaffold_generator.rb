@@ -30,7 +30,7 @@ module Gql
     end
 
     def generate_policy
-      template("policy_file.rb", "app/policies/#{singular_name.pluralize}_policy.rb")
+      template("policy_file.rb", "app/policies/#{singular_name}_policy.rb")
     end
 
     def generate_queries
