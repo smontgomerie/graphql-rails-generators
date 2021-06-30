@@ -5,13 +5,14 @@ module Mutations
       <%
       @fields = map_model_types(name)
       if options['include_columns'].any?
-        @fields.reject! { |field| !options['include_columns'].include?(field[:name]) }
+        @fields.reject! { |field| ['id', 'created_at', 'updated_at'].include?(field[:name]) }
       end
       %>
 
-      <%= class_with_fields(options['namespace'], name, 'Types::BaseInputObject', @fields) %>
-
-      # argument :start_date, GraphQL::Types::ISO8601Date, required: true
+      <% fields.each do |field| %>
+      <% string = sprintf("%sfield :%s, %s, null: %s", "  " * (indent + 1), field[:name], field[:gql_type], field[:null]) %>
+      <%= string %>
+      <% end %>
     end
 
     field :<%= singular_name %>, Types::<%= name %>Type, null: true
