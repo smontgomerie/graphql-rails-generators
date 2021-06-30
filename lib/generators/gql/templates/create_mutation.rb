@@ -3,7 +3,7 @@ module Mutations
     class Create<%= name %>Input < Types::BaseInputObject
       description 'Attributes to create <%= name %>'
       <%
-      fields = map_model_types(model_name)
+      fields = map_model_types(name)
       if options['include_columns'].any?
         fields.reject! { |field| !options['include_columns'].include?(field[:name]) }
       end
