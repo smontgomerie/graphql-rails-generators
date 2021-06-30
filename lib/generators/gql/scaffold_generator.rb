@@ -32,7 +32,7 @@ module Gql
       template("show_query.rb", "app/graphql/resolvers/#{singular_name}.rb")
 
       insert_into_file("app/graphql/types/query_type.rb", after: " class QueryType < Types::BaseObject\n") do
-        "    field :#{singular_name.camelcase(:lower)}, mutation: Resolvers::#{singular_name.capitalize}\n"
+        "    field :#{singular_name.camelcase(:lower)}, resolver: Resolvers::#{singular_name.capitalize}\n"
       end
     end
   end
