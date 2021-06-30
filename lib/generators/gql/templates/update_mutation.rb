@@ -2,8 +2,12 @@ module Mutations
   class <%= prefixed_class_name('Update') %> < Mutations::BaseMutation
     class Update<%= name %>Input < Types::BaseInputObject
       description 'Attributes to update <%= name %>'
-
-      # argument :start_date, GraphQL::Types::ISO8601Date, required: true
+      <%
+      @fields = map_model_types(name)
+      @fields.reject! { |field| ['id', 'created_at', 'updated_at'].include?(field[:name]) }
+      @fields.each do |field|
+      %>
+      <%= sprintf("field :%s, %s, null: %s", field[:name], field[:gql_type], field[:null]) %> <% end %>
     end
 
     field :<%= singular_name %>, Types::<%= name %>Type, null: true
