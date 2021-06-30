@@ -29,10 +29,10 @@ module Gql
     end
 
     def generate_queries
-      template("show_query.rb", "app/graphql/resolvers/#{file_name.underscore}.rb")
+      template("show_query.rb", "app/graphql/resolvers/#{singular_name}.rb")
 
       insert_into_file("app/graphql/types/query_type.rb", after: " class QueryType < Types::BaseObject\n") do
-        "    field :#{file_name.camelcase(:lower)}, mutation: Resolvers::#{prefixed_class_name(prefix)}\n"
+        "    field :#{singular_name.camelcase(:lower)}, mutation: Resolvers::#{singular_name.capitalize}\n"
       end
     end
   end
