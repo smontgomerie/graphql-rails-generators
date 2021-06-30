@@ -9,7 +9,7 @@ module Mutations
       end
       %>
 
-      <%= class_with_fields(options['namespace'], name, superclass, fields) %>
+      <%= class_with_fields(options['namespace'], name, 'Types::BaseInputObject', 'Types::Input') %>
 
       # argument :start_date, GraphQL::Types::ISO8601Date, required: true
     end
