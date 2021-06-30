@@ -5,13 +5,11 @@ module Mutations
       <%
       @fields = map_model_types(name)
       if options['include_columns'].any?
-        @fields.reject! { |field| ['id', 'created_at', 'updated_at'].include?(field[:name]) }
+        @fields.reject! { |field| [:id, :created_at, :updated_at].include?(field[:name]) }
       end
       %>
-
       <% @fields.each do |field| %>
-        <% @string = sprintf("%sfield :%s, %s, null: %s", "  " * 2, field[:name], field[:gql_type], field[:null]) %>
-        <%= @string %>
+        <%= sprintf("%sfield :%s, %s, null: %s", "  ", field[:name], field[:gql_type], field[:null]) %>
       <% end %>
     end
 
