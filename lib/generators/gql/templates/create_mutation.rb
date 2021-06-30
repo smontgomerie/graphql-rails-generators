@@ -10,7 +10,7 @@ module Mutations
       %>
 
       <% @fields.each do |field| %>
-        <% @string = sprintf("%sfield :%s, %s, null: %s", "  " * (indent + 1), field[:name], field[:gql_type], field[:null]) %>
+        <% @string = sprintf("%sfield :%s, %s, null: %s", "  " * 2, field[:name], field[:gql_type], field[:null]) %>
         <%= @string %>
       <% end %>
     end
