@@ -2,14 +2,14 @@ module Mutations
   class <%= prefixed_class_name('Create') %> < Mutations::BaseMutation
     class Create<%= name %>Input < Types::BaseInputObject
       description 'Attributes to create <%= name %>'
-    <%
-    @fields = map_model_types(name)
-    if options['include_columns'].any?
-      @fields.reject! { |field| [:id, :created_at, :updated_at].include?(field[:name]) }
-    end
-    @fields.each do |field|
-    %>
-    <%= sprintf("field :%s, %s, null: %s", field[:name], field[:gql_type], field[:null]) %> <% end %>
+      <%
+      @fields = map_model_types(name)
+      if options['include_columns'].any?
+        @fields.reject! { |field| [:id, :created_at, :updated_at].include?(field[:name]) }
+      end
+      @fields.each do |field|
+      %>
+      <%= sprintf("field :%s, %s, null: %s", field[:name], field[:gql_type], field[:null]) %> <% end %>
     end
 
     field :<%= singular_name %>, Types::<%= name %>Type, null: true
