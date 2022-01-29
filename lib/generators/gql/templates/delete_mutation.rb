@@ -5,7 +5,7 @@ module Mutations
     argument :id, ID, required: true
 
     def resolve(id:)
-      model = <%= class_name %>.find_by(uuid: id)
+      model = Objects::<%= name %>Type.find_object(id) unless id.blank?
 
       authorize! <%= singular_name %>, to: :destroy?
 

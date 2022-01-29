@@ -17,7 +17,7 @@ module Mutations
     argument :input, Update<%= name %>Input, required: true
 
     def resolve(input:, id:)
-      <%= singular_name %> = <%= class_name %>.find_by(uuid: id)
+      <%= singular_name %> = <%= name %>Type.find_object(id) unless id.blank?
 
       authorize! <%= singular_name %>, to: :update?
 
