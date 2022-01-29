@@ -8,6 +8,10 @@ module Gql
 
     argument :mutation_prefix, type: :string
     argument :model_name, type: :string
+
+    class_option :namespace, type: :string, default: 'Types'
+    class_option :base_dir, type: :string, default: 'app/graphql'
+
     source_root File.expand_path('../templates', __FILE__)
 
     # hack to keep NamedBase helpers working
@@ -17,8 +21,11 @@ module Gql
   
     def mutation
       file_name = "#{mutation_prefix}_#{singular_name}"
-      template('model_mutation.rb', "app/graphql/mutations/#{class_path.join('/')}/#{file_name.underscore}.rb")
-      insert_into_file("app/graphql/types/mutation_type.rb", after: "  class MutationType < Types::BaseObject\n") do
+      file_path = File.join(root_directory(options['namespace'], options['base_dir']), "mutations", class_path.join('/'), "#{file_name}.rb")
+      template('model_mutation.rb', file_path)
+      file_path = File.join(root_directory(options['namespace'], options['base_dir']), "types", "mutation_type.rb")
+
+      insert_into_file(file_path, after: "  class MutationType < Types::BaseObject\n") do
         "\t\tfield :#{file_name.camelcase(:lower)}, mutation: Mutations::#{prefixed_class_name(mutation_prefix)}\n"
       end
     end

@@ -32,7 +32,12 @@ $ rails generate gql:model_type MODEL_CLASS
 #### Options
 
 - `--name` - customize the file/class name, useful if you don't want the default Type suffix.
-
+- `--skip-namespace`, `--no-skip-namespace` - Skip namespace (affects only isolated applications)
+- `--name=NAME`                             -  Indicates when to generate name
+- `--include-columns=one two three`         -  Indicates when to generate include columns
+- `--superclass=SUPERCLASS`                 -  Indicates when to generate superclass Default: Types::BaseObject
+- `--namespace=NAMESPACE`                   -  Indicates when to generate namespace Default: Types
+ 
 #### Example
 
 ```ruby
@@ -185,7 +190,7 @@ module Resolvers
     option(:updated_at, type: GraphQL::Types::ISO8601DateTime)   { |scope, value| scope.where updated_at: value }
 
     def resolve
-      []
+- ``
     end
 
   end

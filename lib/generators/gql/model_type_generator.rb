@@ -10,6 +10,7 @@ module Gql
     class_option :include_columns, type: :array, default: []
     class_option :superclass, type: :string, default: 'Types::BaseObject'
     class_option :namespace, type: :string, default: 'Types'
+    class_option :base_dir, type: :string, default: 'app/graphql'
 
     def type
       name = options['name'].nil? ? "#{model_name}Type" : options['name']
@@ -22,7 +23,7 @@ module Gql
       end
 
       code = class_with_fields(options['namespace'], name, superclass, fields)
-      file_name = File.join(root_directory(options['namespace']), "#{name.underscore}.rb")
+      file_name = File.join(root_directory(options['namespace'], options['base_dir']), "#{name.underscore}.rb")
 
       create_file file_name, code
     end

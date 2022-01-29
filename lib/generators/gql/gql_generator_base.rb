@@ -41,8 +41,13 @@ module Gql
         end
     end
 
-    def root_directory(namespace)
-      "app/graphql/#{namespace.underscore}"
+    def root_directory(namespace, root_dir=nil)
+      root_dir ||= "app/graphql"
+      "#{root_dir}/#{namespace.underscore}"
+    end
+
+    def base_dir
+      root_directory(options['namespace'], options['base_dir'])
     end
 
     def wrap_in_namespace(namespace)

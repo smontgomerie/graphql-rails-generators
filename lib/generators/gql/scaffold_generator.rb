@@ -11,6 +11,7 @@ module Gql
     class_option :include_columns, type: :array, default: []
     class_option :superclass, type: :string, default: 'Types::BaseInputObject'
     class_option :namespace, type: :string, default: 'Types::Input'
+    class_option :base_dir, type: :string, default: 'app/graphql'
 
     def scaffold
       generate_queries
@@ -21,10 +22,15 @@ module Gql
     end
 
     protected
+
     def generate_mutation(prefix)
       file_name = "#{prefix}_#{singular_name}"
-      template("#{prefix}_mutation.rb", "app/graphql/mutations/#{class_path.join('/')}/#{file_name.underscore}.rb")
-      insert_into_file("app/graphql/types/mutation_type.rb", after: "  class MutationType < Types::BaseObject\n") do
+
+      file_path = File.join(base_dir, "mutations", class_path.join('/'), "#{file_name.underscore}.rb")
+      template("#{prefix}_mutation.rb", file_path)
+
+      file_path = File.join(base_dir, "types", "mutation_type.rb")
+      insert_into_file(file_path, after: "  class MutationType < Types::BaseObject\n") do
         "    field :#{file_name.camelcase(:lower)}, mutation: Mutations::#{prefixed_class_name(prefix)}\n"
       end
     end
@@ -34,13 +40,13 @@ module Gql
     end
 
     def generate_queries
-      template("show_query.rb", "app/graphql/resolvers/#{singular_name}.rb")
-      insert_into_file("app/graphql/types/query_type.rb", after: " class QueryType < Types::BaseObject\n") do
+      template("show_query.rb", "#{base_dir}/resolvers/#{singular_name}.rb")
+      insert_into_file("#{base_dir}/types/query_type.rb", after: " class QueryType < Types::BaseObject\n") do
         "    field :#{singular_name.camelcase(:lower)}, resolver: Resolvers::#{singular_name.capitalize}\n"
       end
 
-      template("index_query.rb", "app/graphql/resolvers/#{singular_name.pluralize}.rb")
-      insert_into_file("app/graphql/types/query_type.rb", after: " class QueryType < Types::BaseObject\n") do
+      template("index_query.rb", "#{base_dir}/resolvers/#{singular_name.pluralize}.rb")
+      insert_into_file("#{base_dir}/types/query_type.rb", after: " class QueryType < Types::BaseObject\n") do
           "    field :#{singular_name.pluralize.camelcase(:lower)}, resolver: Resolvers::#{singular_name.pluralize.capitalize}\n"
       end
     end

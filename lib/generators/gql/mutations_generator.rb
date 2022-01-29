@@ -11,11 +11,9 @@ module Gql
     class_option :include_columns, type: :array, default: []
     class_option :superclass, type: :string, default: 'Types::BaseInputObject'
     class_option :namespace, type: :string, default: 'Types::Input'
+    class_option :base_dir, type: :string, default: 'app/graphql'
 
     def mutations
-      insert_into_file("app/graphql/mutations/base_mutation.rb", before: "\tend\nend") do
-        "def model_errors!(model)\n# define me!\n"
-      end
       generate_mutation('update')
       generate_mutation('create')
       generate_mutation('delete')
@@ -24,8 +22,10 @@ module Gql
     protected
     def generate_mutation(prefix)
       file_name = "#{prefix}_#{singular_name}"
-      template("#{prefix}_mutation.rb", "app/graphql/mutations/#{class_path.join('/')}/#{file_name.underscore}.rb")
-      insert_into_file("app/graphql/types/mutation_type.rb", after: "  class MutationType < Types::BaseObject\n") do
+      file_path = File.join(base_dir, class_path.join('/'), "#{file_name.underscore}.rb")
+      template("#{prefix}_mutation.rb", file_path)
+      debugger
+      insert_into_file("#{base_dir}/mutation_type.rb", after: "  class MutationType < Types::BaseObject\n") do
         "    field :#{file_name.camelcase(:lower)}, mutation: Mutations::#{prefixed_class_name(prefix)}\n"
       end
     end

@@ -1,5 +1,5 @@
 module Mutations
-  class <%= prefixed_class_name('Create') %> < Mutations::BaseMutation
+  class <%= prefixed_class_name('Create') %> < <%= options['superclass'] %>
     class Create<%= name %>Input < Types::BaseInputObject
       description 'Attributes to create <%= name %>'
       <%

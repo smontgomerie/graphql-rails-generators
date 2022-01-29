@@ -1,5 +1,5 @@
 module Mutations
-  class <%= prefixed_class_name('Update') %> < Mutations::BaseMutation
+  class <%= prefixed_class_name('Update') %> < <%= options['superclass'] %>
     class Update<%= name %>Input < Types::BaseInputObject
       description 'Attributes to update <%= name %>'
       <%

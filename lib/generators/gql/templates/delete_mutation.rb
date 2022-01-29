@@ -1,5 +1,5 @@
 module Mutations
-  class <%= prefixed_class_name('Delete') %> < Mutations::BaseMutation
+  class <%= prefixed_class_name('Delete') %> < <%= options['superclass'] %>
     field :<%= singular_name %>, Types::<%= name %>Type, null: true
 
     argument :id, ID, required: true

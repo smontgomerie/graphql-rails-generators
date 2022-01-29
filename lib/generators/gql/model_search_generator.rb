@@ -4,6 +4,8 @@ module Gql
     include GqlGeneratorBase
     source_root File.expand_path('../templates', __FILE__)
     argument :model_name, type: :string
+    class_option :namespace, type: :string, default: 'Types::Input'
+    class_option :base_dir, type: :string, default: 'app/graphql'
 
     def search
       inject_into_file(
@@ -13,7 +15,10 @@ module Gql
       )
       file_name = "#{model_name.underscore}_search"
       @fields = map_model_types(model_name)
-      template('model_search.rb', "app/graphql/resolvers/#{file_name}.rb")
+
+      file_path = File.join(root_directory(options['namespace'], options['base_dir']), "resolvers", "#{file_name}.rb")
+
+      template('model_search.rb', file_path)
     end
   end
 end
